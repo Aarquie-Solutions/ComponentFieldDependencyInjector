@@ -3,18 +3,16 @@ using UnityEngine;
 
 namespace AarquieSolutions.DependencyInjection.ComponentField
 {
-    public class GetComponentInChildrenAttribute:GetComponentAttributeBase
+    public class GetComponentInChildrenAttribute:GetComponentAttribute
     {
-        public override void SetField(FieldInfo field, MonoBehaviour depender)
+        protected override void SetFieldInternal(FieldInfo field, MonoBehaviour depender, Transform targetTransform)
         {
-            if (!field.FieldType.IsSubclassOf(typeof(Component)))
+            if (!ValidateField(field, depender))
             {
-                LogWarning("Component",depender.GetType().ToString());
                 return;
             }
-
-            field.SetValue(depender, depender.transform.GetComponentInChildren(field.FieldType));
             
+            field.SetValue(depender, depender.GetComponentInChildren(field.FieldType));
         }
     }
 }

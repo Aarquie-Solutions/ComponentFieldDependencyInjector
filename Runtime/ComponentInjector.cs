@@ -16,9 +16,9 @@ namespace AarquieSolutions.DependencyInjection.ComponentField
                 FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
                 foreach (FieldInfo field in fields)
                 {
-                    if (field.IsDefined(typeof(GetComponentAttributeBase), false))
+                    if (field.IsDefined(typeof(ComponentInjectorBaseAttribute), false))
                     {
-                        GetComponentAttributeBase attribute = field.GetCustomAttribute<GetComponentAttributeBase>();
+                        ComponentInjectorBaseAttribute attribute = field.GetCustomAttribute<ComponentInjectorBaseAttribute>();
                         attribute.SetField(field, monoBehaviour);
                     }
                 }

@@ -1,26 +1,23 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
 namespace AarquieSolutions.DependencyInjection.ComponentField
 {
-    public class GetComponentAttribute : ComponentInjectorBaseAttribute
+    public class FindComponentAttribute : ComponentInjectorBaseAttribute
     {
         public override void SetField(FieldInfo field, MonoBehaviour depender)
         {
-            SetFieldInternal(field, depender, depender.transform);
+            SetFieldInternal(field, depender);
         }
 
-        protected virtual void SetFieldInternal(FieldInfo field, MonoBehaviour depender, Transform targetTransform)
+        protected virtual void SetFieldInternal(FieldInfo field, MonoBehaviour depender)
         {
             if (!ValidateField(field, depender))
             {
                 return;
             }
 
-            field.SetValue(depender, targetTransform.GetComponent(field.FieldType));
+            field.SetValue(depender, GameObject.FindObjectOfType(field.FieldType));
         }
 
         protected virtual bool ValidateField(FieldInfo field, MonoBehaviour depender)

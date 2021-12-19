@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AarquieSolutions.DependencyInjection.ComponentField
 {
     [AttributeUsage(AttributeTargets.Field)]
-    public abstract class GetComponentAttributeBase : Attribute
+    public abstract class ComponentInjectorBaseAttribute : Attribute
     {
         public abstract void SetField(FieldInfo field, MonoBehaviour depender);
 
