@@ -12,15 +12,20 @@ namespace AarquieSolutions.DependencyInjection.ComponentField
             MonoBehaviour[] allMonobehaviour = MonoBehaviour.FindObjectsOfType<MonoBehaviour>();
             foreach (MonoBehaviour monoBehaviour in allMonobehaviour)
             {
-                Type type = monoBehaviour.GetType();
-                FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-                foreach (FieldInfo field in fields)
+                InjectDependency(monoBehaviour);
+            }
+        }
+
+        public static void InjectDependency(MonoBehaviour monoBehaviour)
+        {
+            Type type = monoBehaviour.GetType();
+            FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            foreach (FieldInfo field in fields)
+            {
+                if (field.IsDefined(typeof(ComponentInjectorBaseAttribute), false))
                 {
-                    if (field.IsDefined(typeof(ComponentInjectorBaseAttribute), false))
-                    {
-                        ComponentInjectorBaseAttribute attribute = field.GetCustomAttribute<ComponentInjectorBaseAttribute>();
-                        attribute.SetField(field, monoBehaviour);
-                    }
+                    ComponentInjectorBaseAttribute attribute = field.GetCustomAttribute<ComponentInjectorBaseAttribute>();
+                    attribute.SetField(field, monoBehaviour);
                 }
             }
         }

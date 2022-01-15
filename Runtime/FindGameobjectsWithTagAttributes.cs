@@ -1,22 +1,24 @@
 using System;
 using System.Reflection;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace AarquieSolutions.DependencyInjection.ComponentField
 {
-    public class GetComponentsInChildrenAttribute:GetComponentInChildrenAttribute
+    public class FindGameobjectsWithTagAttributes:FindGameobjectWithTagAttribute
     {
-        
-        protected override void SetFieldInternal(FieldInfo field, MonoBehaviour depender, Transform targetTransform)
+        public FindGameobjectsWithTagAttributes(string tag) : base(tag)
+        {
+            
+        }
+
+        protected override void SetFieldInternal(FieldInfo field, MonoBehaviour depender, string tag)
         {
             if (!ValidateField(field, depender))
             {
                 return;
             }
             
-            Type type = field.FieldType.GetElementType();
-            DependencyInjectionUtility.FillFieldArrayWithFunction(targetTransform.GetComponentsInChildren(type), field, depender);
+            DependencyInjectionUtility.FillFieldArrayWithFunction(GameObject.FindGameObjectsWithTag(tag),field, depender);
         }
 
         protected override bool ValidateField(FieldInfo field, MonoBehaviour depender)
@@ -26,7 +28,7 @@ namespace AarquieSolutions.DependencyInjection.ComponentField
                 LogWarning("array",depender.GetType().ToString());
                 return false;
             }
-            else if (!field.FieldType.GetElementType().IsSubclassOf(typeof(Component)))
+            else if (!(field.FieldType.GetElementType() == typeof(GameObject)))
             {
                 LogWarning("Component", depender.GetType().ToString());
                 return false;

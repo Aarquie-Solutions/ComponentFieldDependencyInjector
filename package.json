@@ -1,7 +1,7 @@
 {
   "name": "com.aarquiesolutions.componentfielddependencyinjector",
   "displayName": "Component Field Dependency Injector",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dependency injection for component fields.",
   "type": "framework"
 }
