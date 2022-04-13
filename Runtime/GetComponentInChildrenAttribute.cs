@@ -12,7 +12,7 @@ namespace AarquieSolutions.DependencyInjection.ComponentField
                 return;
             }
             
-            field.SetValue(depender, depender.GetComponentInChildren(field.FieldType));
+            field.SetValue(depender, depender.GetComponentInChildren(field.FieldType, true));
         }
     }
 }

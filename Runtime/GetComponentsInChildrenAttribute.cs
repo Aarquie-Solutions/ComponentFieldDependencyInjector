@@ -16,7 +16,7 @@ namespace AarquieSolutions.DependencyInjection.ComponentField
             }
             
             Type type = field.FieldType.GetElementType();
-            DependencyInjectionUtility.FillFieldArrayWithFunction(targetTransform.GetComponentsInChildren(type), field, depender);
+            DependencyInjectionUtility.FillFieldArrayWithFunction(targetTransform.GetComponentsInChildren(type, true), field, depender);
         }
 
         protected override bool ValidateField(FieldInfo field, MonoBehaviour depender)

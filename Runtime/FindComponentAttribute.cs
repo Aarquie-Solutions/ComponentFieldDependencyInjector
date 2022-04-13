@@ -17,7 +17,7 @@ namespace AarquieSolutions.DependencyInjection.ComponentField
                 return;
             }
 
-            field.SetValue(depender, GameObject.FindObjectOfType(field.FieldType));
+            field.SetValue(depender, GameObject.FindObjectOfType(field.FieldType, true));
         }
 
         protected virtual bool ValidateField(FieldInfo field, MonoBehaviour depender)
